@@ -4,14 +4,24 @@ import { env, isSupabaseConfigured } from './env'
 /**
  * Browser client. Uses only the public project URL and publishable key; every
  * permission is enforced by Row Level Security in the database, not by this code.
- * Null when the environment is not configured so the UI can explain what is missing
- * instead of crashing.
+ *
+ * The app requires Supabase in order to run. Keeping the exported client typed as
+ * a SupabaseClient lets TypeScript correctly type database/storage calls throughout
+ * the browser application. If configuration is missing, fail with a clear message
+ * when the client is accessed instead of producing dozens of nullable-client build
+ * errors across individual pages.
  */
-export const supabase: SupabaseClient | null = isSupabaseConfigured
+const missingSupabase = new Proxy({} as SupabaseClient, {
+  get() {
+    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY.')
+  },
+})
+
+export const supabase: SupabaseClient = isSupabaseConfigured
   ? createClient(env.supabaseUrl, env.supabaseKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
     })
-  : null
+  : missingSupabase
 
 /** Absolute URL for a route, correct under a GitHub Pages project-site base path. */
 export function appUrl(path: string): string {
