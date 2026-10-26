@@ -11,7 +11,8 @@ import ForgotPasswordPage from '@/pages/ForgotPasswordPage'
 import ResetPasswordPage from '@/pages/ResetPasswordPage'
 import VerifyEmailPage from '@/pages/VerifyEmailPage'
 
-const StudentFoundation = lazy(() => import('@/pages/StudentFoundation'))
+const StudentFoundationShell = lazy(() => import('@/pages/StudentFoundationShell'))
+const WorkflowSection = lazy(() => import('@/pages/WorkflowSection'))
 const FacultyDashboard = lazy(() => import('@/pages/FacultyDashboard'))
 const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'))
 const PublicPortfolioPage = lazy(() => import('@/pages/PublicPortfolioPage'))
@@ -40,7 +41,8 @@ export default function App() {
             <Route path="/verify-email" element={<VerifyEmailPage />} />
             <Route path="/student/:username" element={<PublicPortfolioPage />} />
             <Route element={<RequireAuth allow={['student']} />}>
-              <Route path="/dashboard" element={<StudentFoundation />} />
+              <Route path="/dashboard" element={<StudentFoundationShell />} />
+              <Route path="/dashboard/workflow/:code" element={<WorkflowSection />} />
             </Route>
             <Route element={<RequireAuth allow={['faculty', 'admin']} />}>
               <Route path="/faculty" element={<FacultyDashboard />} />
