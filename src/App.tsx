@@ -11,7 +11,7 @@ import ForgotPasswordPage from '@/pages/ForgotPasswordPage'
 import ResetPasswordPage from '@/pages/ResetPasswordPage'
 import VerifyEmailPage from '@/pages/VerifyEmailPage'
 
-const StudentDashboard = lazy(() => import('@/pages/StudentDashboard'))
+const StudentFoundation = lazy(() => import('@/pages/StudentFoundation'))
 const FacultyDashboard = lazy(() => import('@/pages/FacultyDashboard'))
 const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'))
 const PublicPortfolioPage = lazy(() => import('@/pages/PublicPortfolioPage'))
@@ -26,7 +26,6 @@ function Home() {
 
 export default function App() {
   return (
-    // BASE_URL comes from Vite's `base`, so routing works under /<repository-name>/ on GitHub Pages.
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
       <AuthProvider>
         <Suspense fallback={<FullPageSpinner label="Loading…" />}>
@@ -41,7 +40,7 @@ export default function App() {
             <Route path="/verify-email" element={<VerifyEmailPage />} />
             <Route path="/student/:username" element={<PublicPortfolioPage />} />
             <Route element={<RequireAuth allow={['student']} />}>
-              <Route path="/dashboard" element={<StudentDashboard />} />
+              <Route path="/dashboard" element={<StudentFoundation />} />
             </Route>
             <Route element={<RequireAuth allow={['faculty', 'admin']} />}>
               <Route path="/faculty" element={<FacultyDashboard />} />
