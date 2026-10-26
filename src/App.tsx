@@ -13,6 +13,7 @@ import VerifyEmailPage from '@/pages/VerifyEmailPage'
 
 const StudentFoundationShell = lazy(() => import('@/pages/StudentFoundationShell'))
 const WorkflowSection = lazy(() => import('@/pages/WorkflowSection'))
+const EngineeringEvidence = lazy(() => import('@/pages/EngineeringEvidence'))
 const FacultyDashboard = lazy(() => import('@/pages/FacultyDashboard'))
 const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'))
 const PublicPortfolioPage = lazy(() => import('@/pages/PublicPortfolioPage'))
@@ -43,6 +44,7 @@ export default function App() {
             <Route element={<RequireAuth allow={['student']} />}>
               <Route path="/dashboard" element={<StudentFoundationShell />} />
               <Route path="/dashboard/workflow/:code" element={<WorkflowSection />} />
+              <Route path="/dashboard/evidence" element={<EngineeringEvidence />} />
             </Route>
             <Route element={<RequireAuth allow={['faculty', 'admin']} />}>
               <Route path="/faculty" element={<FacultyDashboard />} />
